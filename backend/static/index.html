@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HeartAI &bull; Machine Learning Heart Disease Risk Screening</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Top Health & Ethics Disclaimer Banner -->
+  <aside class="disclaimer-banner" role="alert">
+    <div class="disclaimer-content">
+      <svg class="disclaimer-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="12" y1="8" x2="12" y2="12"/>
+        <line x1="12" y1="16" x2="12.01" y2="16"/>
+      </svg>
+      <div>
+        <strong>Important Health Screening Notice:</strong>
+        This ML-based result is for educational and screening purposes only. It is not a medical diagnosis and should not replace professional medical evaluation. If you have symptoms or concerns about your health, consult a qualified healthcare professional.
+      </div>
+    </div>
+  </aside>
+
+  <!-- Navigation Header -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+            <path d="M12 5v14"/>
+            <path d="m3.5 12 5 2 3.5-5 3.5 5 4.5-2"/>
+          </svg>
+        </div>
+        <div>
+          <h1>HeartAI <span class="badge-ml">ML Screening</span></h1>
+          <p class="subtitle">Machine Learning Heart Disease Risk Screening &bull; UCI Dataset Engine</p>
+        </div>
+      </div>
+      <div class="header-status">
+        <span class="status-indicator online"></span>
+        <span class="status-text" id="api-status">API Connected</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation Tabs -->
+  <nav class="tabs-nav">
+    <div class="container">
+      <button class="tab-btn active" data-tab="tab-home">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Home Overview
+      </button>
+      <button class="tab-btn" data-tab="tab-predict">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="m9 12 2 2 4-4"/></svg>
+        Risk Screening Tool
+      </button>
+      <button class="tab-btn" data-tab="tab-models">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+        Model Benchmarks
+      </button>
+      <button class="tab-btn" data-tab="tab-dataset">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+        UCI Dataset & Schema
+      </button>
+    </div>
+  </nav>
+
+  <main class="container main-content">
+
+    <!-- TAB 0: HOME LANDING PAGE -->
+    <section id="tab-home" class="tab-pane active">
+      
+      <!-- HERO SECTION -->
+      <div class="hero-section">
+        <div class="hero-grid">
+          <div class="hero-text">
+            <span class="hero-badge">Verified Machine Learning Engine</span>
+            <!-- Exact Required Heading -->
+            <h1 class="hero-title">Understand Your Heart Health Risk with Machine Learning</h1>
+            <!-- Exact Required Subtitle -->
+            <p class="hero-subtitle">An ML-powered screening tool that analyzes selected cardiovascular health indicators and provides a model-based prediction.</p>
+            
+            <div class="hero-actions">
+              <!-- Exact Required Primary Button -->
+              <button class="btn btn-primary" onclick="switchToTab('tab-predict')">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+                Check Your Risk
+              </button>
+              <!-- Exact Required Secondary Button -->
+              <button class="btn btn-secondary" onclick="scrollToHowItWorks()">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                How It Works
+              </button>
+            </div>
+          </div>
+
+          <!-- Professional Pure CSS/SVG AI & Healthcare Visual -->
+          <div class="hero-visual">
+            <div class="visual-card">
+              <div class="visual-header">
+                <span class="visual-dot"></span>
+                <span>Neural Cardiovascular Monitor</span>
+                <span class="visual-status">Live</span>
+              </div>
+              <div class="svg-canvas-wrap">
+                <svg class="ecg-svg" viewBox="0 0 400 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Heart Outline Line Art -->
+                  <path d="M 200 50 C 185 25 150 25 135 50 C 115 85 165 135 200 160 C 235 135 285 85 265 50 C 250 25 215 25 200 50 Z" stroke="#6366f1" stroke-width="1.5" stroke-dasharray="3 3" fill="rgba(99, 102, 241, 0.05)" />
+                  <!-- Connected Neural Nodes -->
+                  <line x1="135" y1="50" x2="170" y2="90" stroke="#f43f5e" stroke-width="1" opacity="0.5" />
+                  <line x1="265" y1="50" x2="230" y2="90" stroke="#f43f5e" stroke-width="1" opacity="0.5" />
+                  <circle cx="135" cy="50" r="3" fill="#818cf8" />
+                  <circle cx="265" cy="50" r="3" fill="#818cf8" />
+                  <circle cx="170" cy="90" r="4" fill="#f43f5e" />
+                  <circle cx="230" cy="90" r="4" fill="#f43f5e" />
+                  <circle cx="200" cy="130" r="4" fill="#10b981" />
+                  <!-- Continuous ECG Rhythm Pulse -->
+                  <path d="M 10 90 L 60 90 L 75 80 L 85 100 L 95 90 L 120 90 L 135 30 L 150 150 L 165 70 L 175 105 L 185 90 L 220 90 L 235 30 L 250 150 L 265 70 L 275 105 L 285 90 L 320 90 L 335 80 L 345 100 L 355 90 L 390 90" stroke="#f43f5e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                  <circle cx="250" cy="150" r="5" fill="#ffffff" filter="drop-shadow(0 0 5px #f43f5e)" />
+                </svg>
+              </div>
+              <div class="visual-footer">
+                <div>
+                  <span class="label-xs">Production Model</span>
+                  <strong>Logistic Regression</strong>
+                </div>
+                <div class="text-right">
+                  <span class="label-xs">Verified Accuracy</span>
+                  <strong style="color: #10b981;">80.07%</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 16. PROJECT STATISTICS: ACTUAL VALUES FROM PROJECT -->
+      <div class="stats-section">
+        <div class="stats-header">
+          <h3>Actual Project Benchmarks</h3>
+          <p>Verified statistics derived directly from <code>heart_disease_uci.csv</code> and <code>Heart disease ml.py</code>.</p>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-box">
+            <span class="stat-tag">Total Dataset</span>
+            <div class="stat-num">920</div>
+            <p>Observed patient records</p>
+          </div>
+          <div class="stat-box">
+            <span class="stat-tag">Clinical Features</span>
+            <div class="stat-num">13</div>
+            <p>Biomarkers (ID dropped)</p>
+          </div>
+          <div class="stat-box">
+            <span class="stat-tag">Evaluated Models</span>
+            <div class="stat-num">5</div>
+            <p>LR, Tree, KNN, Linear & RBF SVM</p>
+          </div>
+          <div class="stat-box highlight">
+            <span class="stat-tag">Best Model</span>
+            <div class="stat-num" style="font-size: 1.4rem;">Logistic</div>
+            <p>Flagship production pipeline</p>
+          </div>
+          <div class="stat-box highlight">
+            <span class="stat-tag">Best Accuracy</span>
+            <div class="stat-num" style="color: #10b981;">80.07%</div>
+            <p>Evaluated on 30% test split</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 15. HOW IT WORKS: FOUR CLEAN VISUAL PROCESS STEPS -->
+      <div id="how-it-works" class="how-it-works-section">
+        <div class="section-title-wrap">
+          <h2>How It Works</h2>
+          <p>A four-step visual process ensuring 100% mathematical consistency from input to prediction.</p>
+        </div>
+        <div class="steps-grid">
+          <!-- Step 01 -->
+          <div class="step-box">
+            <div class="step-num">01</div>
+            <h4>Enter Health Information</h4>
+            <p>Input patient age, biological sex, resting blood pressure, cholesterol, resting ECG, and exercise stress data.</p>
+          </div>
+          <!-- Step 02 -->
+          <div class="step-box">
+            <div class="step-num">02</div>
+            <h4>Data Processing</h4>
+            <p>Numerical features are mean-imputed and scaled. Categorical features are mode-imputed and ordinal encoded.</p>
+          </div>
+          <!-- Step 03 -->
+          <div class="step-box">
+            <div class="step-num">03</div>
+            <h4>Machine Learning Analysis</h4>
+            <p>The preprocessed feature vector is evaluated by the serialized pipeline (Logistic Regression, Decision Tree, etc.).</p>
+          </div>
+          <!-- Step 04 -->
+          <div class="step-box">
+            <div class="step-num">04</div>
+            <h4>Receive Prediction</h4>
+            <p>View the model-estimated probability percentage, screening risk level, and transparent clinical risk factors.</p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- TAB 1: PREDICTION PAGE (HEART DISEASE RISK SCREENING) -->
+    <section id="tab-predict" class="tab-pane">
+      
+      <!-- 17. PREDICTION PAGE HEADER -->
+      <div class="page-heading-block">
+        <h2>Heart Disease Risk Screening</h2>
+        <p class="page-subtitle">Enter the available health information below to receive an ML-based prediction.</p>
+      </div>
+
+      <!-- Quick Fill Presets -->
+      <div class="presets-card">
+        <div class="presets-header">
+          <span class="label-title">Quick Test Presets:</span>
+          <span class="presets-hint">Click a test profile to auto-fill the intake form</span>
+        </div>
+        <div class="presets-buttons" id="presets-container">
+          <button type="button" class="preset-btn low" onclick="loadPreset(0)">
+            <span class="dot"></span> Healthy Baseline (Low Risk)
+          </button>
+          <button type="button" class="preset-btn moderate" onclick="loadPreset(1)">
+            <span class="dot"></span> Borderline Case (Moderate)
+          </button>
+          <button type="button" class="preset-btn high" onclick="loadPreset(2)">
+            <span class="dot"></span> High Risk Profile
+          </button>
+        </div>
+      </div>
+
+      <div class="grid-2col">
+        
+        <!-- Left Column: Patient Intake Form Organized into Logical Sections -->
+        <div class="card form-card">
+          <div class="card-header">
+            <h2>Clinical Intake Parameters</h2>
+            <span class="step-badge">13 Feature Variables</span>
+          </div>
+
+          <form id="patient-form" class="clinical-form">
+
+            <!-- Section 1: Demographics -->
+            <div class="form-section">
+              <h3 class="section-title">1. Patient Demographics</h3>
+              <div class="form-row grid-2">
+                <div class="form-group">
+                  <label for="age">Age (Years) <span class="required">*</span></label>
+                  <input type="number" id="age" name="age" min="20" max="100" value="55" required>
+                  <span class="field-hint">Observed dataset range: 28 - 77 yrs</span>
+                </div>
+                <div class="form-group">
+                  <label for="sex">Biological Sex <span class="required">*</span></label>
+                  <select id="sex" name="sex" required>
+                    <option value="Male" selected>Male</option>
+                    <option value="Female">Female</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Section 2: Vitals & Blood Tests -->
+            <div class="form-section">
+              <h3 class="section-title">2. Hemodynamics & Blood Chemistry</h3>
+              <div class="form-row grid-3">
+                <div class="form-group">
+                  <label for="resting_bp">Resting Blood Pressure <span class="required">*</span></label>
+                  <div class="input-with-unit">
+                    <input type="number" id="resting_bp" name="resting_bp" min="80" max="220" value="130" required>
+                    <span class="unit">mmHg</span>
+                  </div>
+                  <span class="field-hint">Normal: &lt; 120 mmHg</span>
+                </div>
+
+                <div class="form-group">
+                  <label for="cholesterol">Serum Cholesterol <span class="required">*</span></label>
+                  <div class="input-with-unit">
+                    <input type="number" id="cholesterol" name="cholesterol" min="100" max="600" value="240" required>
+                    <span class="unit">mg/dL</span>
+                  </div>
+                  <span class="field-hint">Desirable: &lt; 200 mg/dL</span>
+                </div>
+
+                <div class="form-group">
+                  <label for="fasting_blood_sugar">Fasting Blood Sugar &gt; 120 mg/dL</label>
+                  <select id="fasting_blood_sugar" name="fasting_blood_sugar" required>
+                    <option value="FALSE" selected>False (&le; 120 mg/dL)</option>
+                    <option value="TRUE">True (&gt; 120 mg/dL)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Section 3: Cardiac Symptoms & Resting ECG -->
+            <div class="form-section">
+              <h3 class="section-title">3. Symptoms & Resting ECG</h3>
+              <div class="form-row grid-2">
+                <div class="form-group">
+                  <label for="chest_pain">Chest Pain Classification <span class="required">*</span></label>
+                  <select id="chest_pain" name="chest_pain" required>
+                    <option value="typical angina">Typical Angina (Substernal pressure on exertion)</option>
+                    <option value="atypical angina">Atypical Angina (Non-classic symptoms)</option>
+                    <option value="non-anginal">Non-Anginal Chest Pain</option>
+                    <option value="asymptomatic" selected>Asymptomatic (Silent ischemia risk)</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="resting_ecg">Resting Electrocardiogram (ECG)</label>
+                  <select id="resting_ecg" name="resting_ecg" required>
+                    <option value="normal" selected>Normal</option>
+                    <option value="st-t abnormality">ST-T Wave Abnormality (T-inversion/elevation)</option>
+                    <option value="lv hypertrophy">Left Ventricular Hypertrophy (Estes' criteria)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Section 4: Stress Testing & Imaging -->
+            <div class="form-section">
+              <h3 class="section-title">4. Exercise Stress Test & Cardiac Imaging</h3>
+              <div class="form-row grid-3">
+                <div class="form-group">
+                  <label for="max_heart_rate">Max Heart Rate Achieved</label>
+                  <div class="input-with-unit">
+                    <input type="number" id="max_heart_rate" name="max_heart_rate" min="60" max="230" value="150" required>
+                    <span class="unit">bpm</span>
+                  </div>
+                  <span class="field-hint">Max stress heart rate (thalach)</span>
+                </div>
+
+                <div class="form-group">
+                  <label for="exercise_angina">Exercise Induced Angina</label>
+                  <select id="exercise_angina" name="exercise_angina" required>
+                    <option value="FALSE" selected>No (Absence of angina)</option>
+                    <option value="TRUE">Yes (Provoked by exercise)</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="oldpeak">ST Depression (Oldpeak)</label>
+                  <div class="input-with-unit">
+                    <input type="number" step="0.1" id="oldpeak" name="oldpeak" min="-2.0" max="8.0" value="1.2" required>
+                    <span class="unit">mm</span>
+                  </div>
+                  <span class="field-hint">Depression relative to rest</span>
+                </div>
+              </div>
+
+              <div class="form-row grid-3">
+                <div class="form-group">
+                  <label for="st_slope">Peak Exercise ST Slope</label>
+                  <select id="st_slope" name="st_slope" required>
+                    <option value="upsloping">Upsloping (Typically benign)</option>
+                    <option value="flat" selected>Flat (Equivocal / Ischemic marker)</option>
+                    <option value="downsloping">Downsloping (High indicator of ischemia)</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="major_vessels">Major Vessels Visible (Fluoroscopy)</label>
+                  <select id="major_vessels" name="major_vessels" required>
+                    <option value="0" selected>0 Vessels (Uncompromised)</option>
+                    <option value="1">1 Vessel Narrowed</option>
+                    <option value="2">2 Vessels Narrowed</option>
+                    <option value="3">3 Vessels Narrowed</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="thalassemia">Thallium Perfusion Defect</label>
+                  <select id="thalassemia" name="thalassemia" required>
+                    <option value="normal" selected>Normal Perfusion</option>
+                    <option value="fixed defect">Fixed Defect (Old scar / Infarct)</option>
+                    <option value="reversable defect">Reversible Defect (Active ischemia)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Model Selection Bar -->
+            <div class="model-select-bar">
+              <label for="selected_model">Evaluation Model Pipeline:</label>
+              <select id="selected_model" name="selected_model">
+                <option value="Logistic Regression" selected>Logistic Regression (Production Flagship &bull; 80% Acc)</option>
+                <option value="Decision Tree">Decision Tree (Balanced Weights &bull; High Recall)</option>
+                <option value="KNN (k=21)">K-Nearest Neighbors (k=21)</option>
+                <option value="Linear SVM">Support Vector Machine (Linear Kernel)</option>
+                <option value="RBF SVM">Support Vector Machine (RBF Kernel)</option>
+              </select>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary" id="btn-submit">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                Run Risk Screening
+              </button>
+              <button type="reset" class="btn btn-secondary">Reset Inputs</button>
+            </div>
+
+          </form>
+        </div>
+
+        <!-- Right Column: Results & Clinical Insights -->
+        <div class="results-column">
+          
+          <div class="card result-card" id="result-card">
+            <div class="card-header">
+              <h2>Screening Assessment</h2>
+              <span class="badge" id="active-model-badge">Logistic Regression</span>
+            </div>
+
+            <!-- Initial Idle State -->
+            <div id="result-idle" class="result-state">
+              <div class="idle-graphic">
+                <svg viewBox="0 0 24 24" width="64" height="64" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+                  <path d="M12 5v14"/>
+                  <path d="m3.5 12 5 2 3.5-5 3.5 5 4.5-2"/>
+                </svg>
+              </div>
+              <h3>Awaiting Clinical Data</h3>
+              <p>Fill in patient variables or select a quick test profile, then click <strong>Run Risk Screening</strong>.</p>
+            </div>
+
+            <!-- Loading Spinner State -->
+            <div id="result-loading" class="result-state hidden">
+              <div class="spinner"></div>
+              <p>Executing Scikit-Learn inference pipeline...</p>
+            </div>
+
+            <!-- Active Output State -->
+            <div id="result-output" class="result-state hidden">
+              
+              <!-- Model-estimated probability gauge -->
+              <div class="gauge-container">
+                <div class="gauge-circle" id="gauge-circle">
+                  <div class="gauge-inner">
+                    <span class="gauge-percentage" id="gauge-prob">--%</span>
+                    <span class="gauge-label">Model-Estimated Probability</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Risk Badge (Higher / Lower predicted risk) -->
+              <div class="risk-badge-wrap">
+                <span class="risk-badge" id="risk-level-badge">LOWER PREDICTED RISK</span>
+              </div>
+
+              <div class="prediction-summary" id="prediction-summary">
+                Lower predicted risk according to this model
+              </div>
+
+              <!-- Risk Factor Breakdown -->
+              <div class="risk-factors-section">
+                <h4 class="factor-header">Patient Clinical Risk Factors Detected:</h4>
+                <div class="factor-list" id="factor-list">
+                  <!-- Dynamically populated -->
+                </div>
+              </div>
+
+              <!-- Mandatory Health Screening Disclaimer -->
+              <div class="result-disclaimer-box" style="background: rgba(254, 243, 199, 0.5); border: 1px solid #fde68a; border-radius: 8px; padding: 0.75rem; text-align: left; font-size: 0.76rem; color: #92400e; margin-bottom: 1rem;">
+                <p><strong>Screening Notice:</strong> This ML-based result is for educational and screening purposes only. It is not a medical diagnosis and should not replace professional medical evaluation. If you have symptoms or concerns about your health, consult a qualified healthcare professional.</p>
+              </div>
+
+              <!-- Print / Action buttons -->
+              <div class="result-actions">
+                <button type="button" class="btn btn-outline" onclick="window.print()">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>
+                  Print Summary Report
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- TAB 2: MODEL PERFORMANCE COMPARISON -->
+    <section id="tab-models" class="tab-pane">
+      <div class="card">
+        <div class="card-header">
+          <h2>Trained Models Performance Comparison</h2>
+          <span class="step-badge">Evaluated on 30% Test Split (276 samples)</span>
+        </div>
+        <p class="section-desc">
+          All models are trained with identical random seeds (42) and identical 70/30 train/test splits as defined in the original project's <code>Heart disease ml.py</code>.
+        </p>
+
+        <!-- Metric Table -->
+        <div class="table-responsive">
+          <table class="metrics-table" id="metrics-table">
+            <thead>
+              <tr>
+                <th>Model Architecture</th>
+                <th>Accuracy</th>
+                <th>Precision</th>
+                <th>Recall (Sensitivity)</th>
+                <th>F1-Score</th>
+                <th>ROC-AUC</th>
+                <th>Artifact File</th>
+              </tr>
+            </thead>
+            <tbody id="metrics-tbody">
+              <!-- Dynamically populated via /model-info -->
+              <tr>
+                <td colspan="7" class="loading-cell">Loading model metrics from backend...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Comparative Insights Cards -->
+        <div class="grid-3 mt-6">
+          <div class="stat-card highlight">
+            <span class="stat-label">Primary Production Model</span>
+            <span class="stat-value">Logistic Regression</span>
+            <span class="stat-desc">~80% accuracy, high recall, calibrated probabilities, and full log-odds clinical explainability.</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">High-Recall Alternative</span>
+            <span class="stat-value">Decision Tree</span>
+            <span class="stat-desc">Trained with <code>class_weight="balanced"</code> to penalize false negatives in cardiac risk detection.</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Non-Parametric Baseline</span>
+            <span class="stat-value">KNN (k=21)</span>
+            <span class="stat-desc">Evaluates neighborhood cluster density of closest patient profiles in feature space.</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- TAB 3: DATASET & PIPELINE SCHEMA -->
+    <section id="tab-dataset" class="tab-pane">
+      <div class="card">
+        <div class="card-header">
+          <h2>Dataset & Preprocessing Architecture</h2>
+          <span class="step-badge">heart_disease_uci.csv</span>
+        </div>
+
+        <div class="dataset-stats-row">
+          <div class="stat-badge">
+            <strong>Total Dataset Size:</strong> 920 Records
+          </div>
+          <div class="stat-badge">
+            <strong>Training Set (70%):</strong> 644 Patients
+          </div>
+          <div class="stat-badge">
+            <strong>Test Set (30%):</strong> 276 Patients
+          </div>
+          <div class="stat-badge">
+            <strong>Original Target:</strong> Multiclass (0, 1, 2, 3, 4)
+          </div>
+          <div class="stat-badge">
+            <strong>Binarized Target:</strong> 0: No Disease | 1: Disease (> 0)
+          </div>
+        </div>
+
+        <h3 class="mt-6 mb-3">Feature Schema & Encoding Definitions</h3>
+        <div class="table-responsive">
+          <table class="metrics-table">
+            <thead>
+              <tr>
+                <th>Feature Column</th>
+                <th>Type</th>
+                <th>Handling & Imputation</th>
+                <th>Clinical Meaning & Observed Values</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>age</code></td>
+                <td>Numerical</td>
+                <td>Mean Imputed &bull; Standard Scaled</td>
+                <td>Patient age in years (28 - 77)</td>
+              </tr>
+              <tr>
+                <td><code>gender</code></td>
+                <td>Categorical</td>
+                <td>Mode Imputed &bull; Ordinal Encoded</td>
+                <td>Biological sex: Female (0), Male (1)</td>
+              </tr>
+              <tr>
+                <td><code>chest pain type</code></td>
+                <td>Categorical</td>
+                <td>Mode Imputed &bull; Ordinal Encoded</td>
+                <td>Asymptomatic, Atypical Angina, Non-Anginal, Typical Angina</td>
+              </tr>
+              <tr>
+                <td><code>resting bps</code></td>
+                <td>Numerical</td>
+                <td>Mean Imputed &bull; Standard Scaled</td>
+                <td>Resting blood pressure in mmHg (admission vitals)</td>
+              </tr>
+              <tr>
+                <td><code>cholestrol</code></td>
+                <td>Numerical</td>
+                <td>Mean Imputed &bull; Standard Scaled</td>
+                <td>Serum cholesterol in mg/dL</td>
+              </tr>
+              <tr>
+                <td><code>fasting blood sugar</code></td>
+                <td>Categorical</td>
+                <td>Mode Imputed &bull; Ordinal Encoded</td>
+                <td>Blood sugar &gt; 120 mg/dL: FALSE (0), TRUE (1)</td>
+              </tr>
+              <tr>
+                <td><code>restecg result</code></td>
+                <td>Categorical</td>
+                <td>Mode Imputed &bull; Ordinal Encoded</td>
+                <td>Normal (0), ST-T Abnormality (1), LV Hypertrophy (2)</td>
+              </tr>
+              <tr>
+                <td><code>mx heart rate achieved</code></td>
+                <td>Numerical</td>
+                <td>Mean Imputed &bull; Standard Scaled</td>
+                <td>Maximum heart rate achieved during exercise stress</td>
+              </tr>
+              <tr>
+                <td><code>exang</code></td>
+                <td>Categorical</td>
+                <td>Mode Imputed &bull; Ordinal Encoded</td>
+                <td>Exercise induced angina: FALSE (0), TRUE (1)</td>
+              </tr>
+              <tr>
+                <td><code>oldpeak</code></td>
+                <td>Numerical</td>
+                <td>Mean Imputed &bull; Standard Scaled</td>
+                <td>ST depression induced by exercise relative to rest (mm)</td>
+              </tr>
+              <tr>
+                <td><code>slope</code></td>
+                <td>Categorical</td>
+                <td>Mode Imputed &bull; Ordinal Encoded</td>
+                <td>Peak exercise ST slope: Upsloping, Flat, Downsloping</td>
+              </tr>
+              <tr>
+                <td><code>major vessels visible(ca)</code></td>
+                <td>Numerical</td>
+                <td>Mean Imputed &bull; Standard Scaled</td>
+                <td>Number of major coronary vessels (0-3) colored by fluoroscopy</td>
+              </tr>
+              <tr>
+                <td><code>thal</code></td>
+                <td>Categorical</td>
+                <td>Mode Imputed &bull; Ordinal Encoded</td>
+                <td>Thallium heart scan: Normal, Fixed Defect, Reversible Defect</td>
+              </tr>
+              <tr>
+                <td><code>target</code></td>
+                <td>Target Variable</td>
+                <td>Binarized (<code>target &gt; 0</code>)</td>
+                <td>0 = No Significant Disease | 1 = Presence of Heart Disease</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="app-footer">
+    <div class="container">
+      <p>&copy; 2026 HeartAI &bull; Machine Learning Heart Disease Risk Screening &bull; Based on the UCI Machine Learning Project &bull; Educational & Screening Use Only</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,186 @@
+{
+  "dataset": {
+    "filename": "heart_disease_uci.csv",
+    "total_samples": 920,
+    "train_samples": 644,
+    "test_samples": 276,
+    "target_definition": "0: No Heart Disease, 1: Heart Disease Present (converted via target > 0)",
+    "numerical_features": [
+      "age",
+      "resting bps",
+      "cholestrol",
+      "mx heart rate achieved",
+      "oldpeak",
+      "major vessels visible(ca)"
+    ],
+    "categorical_features": [
+      "gender",
+      "chest pain type",
+      "fasting blood sugar",
+      "restecg result",
+      "exang",
+      "slope",
+      "thal"
+    ],
+    "all_features": [
+      "age",
+      "resting bps",
+      "cholestrol",
+      "mx heart rate achieved",
+      "oldpeak",
+      "major vessels visible(ca)",
+      "gender",
+      "chest pain type",
+      "fasting blood sugar",
+      "restecg result",
+      "exang",
+      "slope",
+      "thal"
+    ]
+  },
+  "models": {
+    "Logistic Regression": {
+      "accuracy": 0.7862,
+      "precision": 0.844,
+      "recall": 0.7628,
+      "f1_score": 0.8013,
+      "roc_auc": 0.869,
+      "confusion_matrix": {
+        "true_negative": 98,
+        "false_positive": 22,
+        "false_negative": 37,
+        "true_positive": 119,
+        "matrix": [
+          [
+            98,
+            22
+          ],
+          [
+            37,
+            119
+          ]
+        ]
+      },
+      "filename": "heart_disease_pipeline.pkl",
+      "description": "Logistic Regression with calibrated probabilities and feature log-odds explainability"
+    },
+    "Decision Tree": {
+      "accuracy": 0.779,
+      "precision": 0.8467,
+      "recall": 0.7436,
+      "f1_score": 0.7918,
+      "roc_auc": 0.8387,
+      "confusion_matrix": {
+        "true_negative": 99,
+        "false_positive": 21,
+        "false_negative": 40,
+        "true_positive": 116,
+        "matrix": [
+          [
+            99,
+            21
+          ],
+          [
+            40,
+            116
+          ]
+        ]
+      },
+      "filename": "decision_tree_pipeline.pkl",
+      "description": "Decision Tree (entropy, max_depth=5, balanced class weights)"
+    },
+    "KNN (k=21)": {
+      "accuracy": 0.808,
+      "precision": 0.8931,
+      "recall": 0.75,
+      "f1_score": 0.8153,
+      "roc_auc": 0.8964,
+      "confusion_matrix": {
+        "true_negative": 106,
+        "false_positive": 14,
+        "false_negative": 39,
+        "true_positive": 117,
+        "matrix": [
+          [
+            106,
+            14
+          ],
+          [
+            39,
+            117
+          ]
+        ]
+      },
+      "filename": "knn_pipeline.pkl",
+      "description": "K-Nearest Neighbors (k=21)"
+    },
+    "Linear SVM": {
+      "accuracy": 0.7935,
+      "precision": 0.8613,
+      "recall": 0.7564,
+      "f1_score": 0.8055,
+      "roc_auc": 0.8666,
+      "confusion_matrix": {
+        "true_negative": 101,
+        "false_positive": 19,
+        "false_negative": 38,
+        "true_positive": 118,
+        "matrix": [
+          [
+            101,
+            19
+          ],
+          [
+            38,
+            118
+          ]
+        ]
+      },
+      "filename": "svm_linear_pipeline.pkl",
+      "description": "Support Vector Classifier with Linear Kernel"
+    },
+    "RBF SVM": {
+      "accuracy": 0.837,
+      "precision": 0.8776,
+      "recall": 0.8269,
+      "f1_score": 0.8515,
+      "roc_auc": 0.9028,
+      "confusion_matrix": {
+        "true_negative": 102,
+        "false_positive": 18,
+        "false_negative": 27,
+        "true_positive": 129,
+        "matrix": [
+          [
+            102,
+            18
+          ],
+          [
+            27,
+            129
+          ]
+        ]
+      },
+      "filename": "svm_rbf_pipeline.pkl",
+      "description": "Support Vector Classifier with Radial Basis Function (RBF) Kernel"
+    }
+  },
+  "primary_production_model": "Logistic Regression",
+  "primary_pipeline_file": "heart_disease_pipeline.pkl",
+  "feature_coefficients_log_odds": {
+    "age": 0.1606,
+    "resting bps": 0.072,
+    "cholestrol": -0.5135,
+    "mx heart rate achieved": -0.2678,
+    "oldpeak": 0.7169,
+    "major vessels visible(ca)": 0.5936,
+    "gender": 1.4236,
+    "chest pain type": -0.7191,
+    "fasting blood sugar": 0.4387,
+    "restecg result": 0.0414,
+    "exang": 0.9895,
+    "slope": -0.1811,
+    "thal": 0.3119
+  },
+  "disclaimer": "This application is a Machine Learning screening and educational demonstration project. It is NOT medically validated and must NOT be used as a substitute for professional medical diagnosis, clinical advice, or treatment."
+}
